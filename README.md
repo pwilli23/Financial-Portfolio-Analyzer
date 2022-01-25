@@ -16,7 +16,7 @@ Table of contents
 
 
 
-1. Libraries and Dependencies
+# 1. Libraries and Dependencies
 
 import os
 import json
@@ -30,7 +30,7 @@ from MCForecastTools import MCSimulation
 
 
 
-2. Connect, Extract, and Prepare Data from API
+# 2. Connect, Extract, and Prepare Data from API
 
 # Load env environment variables
 load_dotenv()
@@ -120,7 +120,7 @@ ltc_df = ltc_series.to_frame()
 
 
 
-3. Daily Return
+# 3. Daily Return
 
 # Calculating daily return data for the whole two year period
 crypto_daily_returns = crypto_df.pct_change()
@@ -130,7 +130,7 @@ crypto_daily_returns.hvplot(figsize=(15,10), title='Daily Returns of BTC,ETH,ADA
 
 
 
-4. Cumulative Return
+# 4. Cumulative Return
 
 # Calculating cumulative return data for the whole two year period
 crypto_cumulative_returns = (1 + crypto_daily_returns).cumprod()
@@ -141,7 +141,7 @@ crypto_cumulative_returns.hvplot(figsize=(15,10), title='Cumulative Returns of B
 
 
 
-5. Standard Deviation
+# 5. Standard Deviation
 
 # Calculating the std from 2019 to present
 crypto_std = crypto_daily_returns.std()
@@ -152,7 +152,7 @@ display(crypto_std.sort_values())
 # Plotting the std data
 crypto_std.hvplot.bar(figsize=(15,10), title='Standard Deviation of BTC,ETH,ADA,BNB, and LTC 2019-Present', rot=0)
 
-6. Annualized Standard Deviation
+# 6. Annualized Standard Deviation
 
 # The number of trading days in one crypto calendar year
 trading_days=365
@@ -168,7 +168,7 @@ crypto_annualized_std.hvplot.bar(figsize=(15,10), title='Annualized Standard Dev
 
 
 
-7. Annualized Average Standard Deviation
+# 7. Annualized Average Standard Deviation
 
 # Calculating the annual average daily returns for the whole two year period
 crypto_annualized_returns = crypto_daily_returns.mean() * trading_days
@@ -181,7 +181,7 @@ crypto_annualized_returns.hvplot.bar(figsize=(15,10), title='Annualized Average 
 
 
 
-8. Sharpe Ratios
+# 8. Sharpe Ratios
 
 # Calculating the Sharpe Ratios 
 crypto_sharpe_ratios = crypto_annualized_returns / crypto_annualized_std
@@ -194,7 +194,7 @@ crypto_sharpe_ratios.hvplot.bar(figsize=(15,10), title='Sharpe Ratios of BTC,ETH
 
 
 
-9. Variance
+# 9. Variance
 
 # Calculating the variance
 crypto_variance = crypto_daily_returns.var()
@@ -210,7 +210,7 @@ btc_variance = crypto_daily_returns['Bitcoin'].var()
 
 
 
-10. Covariance
+# 10. Covariance
 
 # Calculating the four crypto's covariance to bitcoin
 eth_covariance = crypto_daily_returns['Ethereum'].cov(crypto_daily_returns['Bitcoin'])
@@ -220,7 +220,7 @@ ltc_covariance = crypto_daily_returns['Litecoin'].cov(crypto_daily_returns['Bitc
 
 
 
-11. Beta
+# 11. Beta
 
 # Calculating the four crypto's beta
 eth_beta = eth_covariance / btc_variance

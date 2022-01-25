@@ -52,6 +52,7 @@ ada_request_url = ada_url + crypto_api_key
 bnb_request_url = bnb_url + crypto_api_key
 ltc_request_url = ltc_url + crypto_api_key
 
+# Make request to the API
 response_btc = requests.get(btc_request_url).json()
 
 response_eth = requests.get(eth_request_url).json()
@@ -62,6 +63,7 @@ response_bnb = requests.get(bnb_request_url).json()
 
 response_ltc = requests.get(ltc_request_url).json()
 
+# Extract data into list
 btc_high_price = []
 for data_point in response_btc['Data']['Data']:
     btc_high_value = data_point.get('high')
@@ -231,7 +233,50 @@ ltc_beta = ltc_covariance / btc_variance
 
 
 12. Probability Distribution
+
+# Plotting the probability distributions  
+crypto_daily_returns["Bitcoin"].hvplot(kind='hist', figsize=(15,7), title= 'Crypto Probability Distribution')
+crypto_daily_returns["Ethereum"].hvplot(kind='hist', figsize=(15,7), title= 'Ethereum Probability Distribution')
+crypto_daily_returns["Binance"].hvplot(kind='hist',figsize=(15,7), title='Binance Probability Distribution')
+crypto_daily_returns["Litecoin"].hvplot(kind='hist',figsize=(15,7), title= "Litecoin Probability Distribution")
+crypto_daily_returns["Cardano"].hvplot(kind='hist', figsize=(15,7), title= "Cardano Probability Distribution")
+
+
+
 13. Density
+
+# Plotting the density graph
+crypto_daily_returns.hvplot.density(figsize=(20,10), title= 'Density Plot for Cryptocurrencies')
+
+
+
 14. Monte Carlo
 
+# Creating a new dataframe prepped for the monte carlo simulation for the next two years
+mc_twoyear = MCSimulation(
+    portfolio_data=crypto_df,
+    weights=[.20,.20,.20,.20,.20],
+    num_simulation=500,
+    num_trading_days=365*2
+)
+
+# Running five hundred monte carlo simulations of cumulative return trajectories over the next 730 days
+mc_twoyear.calc_cumulative_return()
+
+# Plotting the monte carlo simulations cumulative return trajectories
+mc_sim_line_plot = mc_twoyear.plot_simulation()
+
+# Plotting the distribution across all 500 simulations
+mc_sim_dist_plot = mc_twoyear.plot_distribution()
+
+# Extracting the summary statistics 
+mc_summary_statistics = mc_twoyear.summarize_cumulative_return()
+
+# Using the lower and upper 95% confidence intervals from the summary statistics to calculate the range of probable cumulative returns for a $10,000 investment
+ci_95_lower_cumulative_return = mc_summary_statistics[8] * 10000
+ci_95_upper_cumulative_return = mc_summary_statistics[9] * 10000
+
+print(f'There is a 95% chance that an initial investment of $10,000 in the portfolio'
+     f' over the next two years will end within the range of'
+     f' ${ci_95_lower_cumulative_return: .2f} and ${ci_95_upper_cumulative_return: .2f}.')
 

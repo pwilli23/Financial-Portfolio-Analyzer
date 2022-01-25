@@ -232,7 +232,7 @@ ltc_beta = ltc_covariance / btc_variance
 
 
 
-12. Probability Distribution
+# 12. Probability Distribution
 
 # Plotting the probability distributions  
 crypto_daily_returns["Bitcoin"].hvplot(kind='hist', figsize=(15,7), title= 'Crypto Probability Distribution')
@@ -243,14 +243,14 @@ crypto_daily_returns["Cardano"].hvplot(kind='hist', figsize=(15,7), title= "Card
 
 
 
-13. Density
+# 13. Density
 
 # Plotting the density graph
 crypto_daily_returns.hvplot.density(figsize=(20,10), title= 'Density Plot for Cryptocurrencies')
 
 
 
-14. Monte Carlo
+# 14. Monte Carlo
 
 # Creating a new dataframe prepped for the monte carlo simulation for the next two years
 mc_twoyear = MCSimulation(
